@@ -1,0 +1,18 @@
+h2 Administer grades
+
+p <strong>Mark the tasks you have completed.</strong>
+
+form.new action="/admin/claims" method="POST"
+  - @recitation.claims.each do |claim|
+    h3 #{claim.student_name}
+    h4 Solved exercises
+    ol 
+    - claim.claimparts.each do |part|
+      li #{part.taskpart.task.number} #{part.taskpart.letter}
+    label for="claimdemo#{claim.id}" Has demonstrated a solution:
+    input id="claimdemo#{claim.id}" type="checkbox" name="demo[#{claim.id}]" #{'checked="checked"' if claim.demonstrated}
+    label for="claimgrade#{claim.id}" Update grade:
+    input id="claimgrade#{claim.id}" type="number" name="grade[#{claim.id}]" value="#{claim.grade}"
+      
+  br
+  input type="submit" value="Update grades."

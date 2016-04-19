@@ -1,0 +1,15 @@
+- if @recitations.any?
+  p These are the recitations available for registration.
+  
+  table.recitations
+    tr.header
+      td Course
+      td Recitation name
+      td Group
+    - @recitations.each do |rec|
+      tr
+        td= rec.course_id
+        td <a href ="/recitations/#{rec.id}">#{rec.name}</a>
+        td= Group.get(rec.id).letter
+- else
+  p There are no recitations avaiable for registration at the moment.

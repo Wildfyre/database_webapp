@@ -1,0 +1,14 @@
+h2 Claims by tasks
+- @recitation.taskset.tasks(:order => [:number]).each do |task|
+  h2 #{task.number}
+  - task.taskparts(:order => [:letter]).each do |part|
+    h3 #{part.letter} 
+    - if (@recitation.claims.claimparts.all(taskpart_id: part.id).count == 0)
+      p No student claims to have solved this task.
+    - else
+      p The following students claims to have solved this task.
+      ul.solvers
+        - @recitation.claims.claimparts.all(taskpart_id: part.id).each do |cpart|
+          li= Claim.get(cpart.claim_id).student_name
+          
+a#submit_claim href="/recitations/#{@recitation.id}/claims/admin" (Secret) Administer grades  

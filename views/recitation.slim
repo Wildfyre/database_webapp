@@ -1,0 +1,16 @@
+h1= @recitation.name
+
+p Course: #{@recitation.course_id}
+
+p Instruction: #{@recitation.instruction}
+
+h2 Tasks
+- @recitation.taskset.tasks(:order => [:number]).each do |task|
+  h2 #{task.number}
+  p= task.instruction.capitalize
+  - task.taskparts(:order => [:letter]).each do |part|
+    p #{part.letter}) #{part.content}
+    
+
+a#submit_claim href="/recitations/#{@recitation.id}/claims" See claims made!    
+a#submit_claim href="/recitations/#{@recitation.id}/claims/new" Register your claims!

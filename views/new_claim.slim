@@ -1,0 +1,23 @@
+h2 Submit new claims
+
+p <strong>Mark the tasks you have completed.</strong>
+
+form.new action="/new/claim" method="POST"
+  - @recitation.taskset.tasks(:order => [:number]).each do |task|
+    h3 #{task.number}
+    p.task= task.instruction.capitalize
+    - task.taskparts(:order => [:letter]).each do |part|
+      h4 #{part.letter}
+      div.tpboxform
+        label for="tp#{part.id}" Solved
+        input id="tp#{part.id}" type="checkbox" name="taskpart[#{part.id}]"
+      
+  label for="studentidfield" KTH-ID:
+  input#studentidfield type="text" name="claim[student_id]"
+  
+  label for="studentnamefield" Name:
+  input#studentnamefield type="text" name="claim[student_name]"
+  
+  input type="hidden" name="claim[recitation_id]" value="#{@recitation.id}"
+  
+  input type="submit" value="Submit claim!"
